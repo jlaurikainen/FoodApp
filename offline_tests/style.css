@@ -1,0 +1,131 @@
+:root{
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+h1{
+    font-size: 1.5rem;
+}
+
+h2{
+    font-size: 1.25rem;
+}
+
+h3{
+    font-size: 1rem;
+}
+
+.container{
+    padding: 0px 1rem;
+    width: 100%;
+}
+
+.graphs{
+    padding: 1rem 0rem;
+}
+
+.graphs-heading{
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.daily-cal-circle{
+    fill: transparent;
+    stroke-width: 25px;
+    stroke: #334;
+    stroke-dasharray: 791.7;
+    stroke-dashoffset: 198;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.daily-cal-numbers{
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+.daily-cal-numbers tspan{
+    font-weight: normal;
+    font-size: 1rem;
+    fill: rgba(0,0,0,0.75);
+}
+
+.responsive{
+    display: block;
+    width: 100%;
+}
+
+.meals-list{
+    padding: 1rem 0rem 0rem 0rem;
+}
+
+.meals-heading{
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.meal-item{
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    padding: 1rem 0rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: 
+        "heading actions"
+        "sub-heading actions";
+}
+
+.meal-item:last-child{
+    border-bottom: none;
+}
+
+.meal-heading{
+    margin-bottom: 0.5rem;
+    grid-area: heading;
+}
+
+.meal-sub-heading{
+    color: rgba(0,0,0,0.75);
+    grid-area: sub-heading;
+}
+
+.meal-actions{
+    grid-area: actions;
+    justify-self: end;
+    align-self: center;
+}
+
+.action-button{
+    background: rgba(0,0,0,0.05);
+    border: none;
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.action-button:focus, .fab-button:focus{
+    animation: buttonFlash 0.3s ease-in-out forwards;
+    outline: none;
+}
+
+@keyframes buttonFlash{
+    0% {
+        filter: blur(0px);
+    }
+
+    50% {
+        filter: blur(2px);
+    }
+
+    100% {
+        filter: blur(0px);
+    }
+}
