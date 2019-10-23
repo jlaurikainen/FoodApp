@@ -15,8 +15,7 @@ export default {
     DailyMealListComponent
   },
   data() {
-    return {
-    };
+    return {};
   }
 };
 </script>

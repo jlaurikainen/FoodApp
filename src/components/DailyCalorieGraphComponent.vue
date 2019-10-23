@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="column">
-      <h1 class="u-text-center">{{ date }}</h1>
+      <h1 class="u-text-center">23.10.2019</h1>
       <div class="graph-container">
         <svg width="360" height="240" viewBox="0 0 360 240" class="u-full-width circle-graph">
           <circle cx="50%" cy="50%" r="100" fill="transparent" stroke-width="30" stroke="#ddf" />
@@ -12,16 +12,16 @@
             fill="transparent"
             stroke-width="30"
             stroke="#334"
-            :stroke-dasharray="graphCircleSegments"
-            :stroke-dashoffset="graphCircleCompletion"
+            stroke-dasharray="628"
+            stroke-dashoffset="234"
           />
         </svg>
         <div class="graph-text-info">
-          <h2>
-            {{ caloriePercentComplete }}
+          <p>
+            69
             <span>%</span>
-          </h2>
-          <h5>{{ caloriesRemaining }} kcal jäljellä</h5>
+          </p>
+          <p>-123 kcal</p>
         </div>
       </div>
     </div>
@@ -32,30 +32,9 @@
 export default {
   name: "DailyCalorieGraphComponent",
   data() {
-    return {
-      date: this.$store.getters.dateString,
-      calorieLimit: this.$store.getters.getCalorieLimit,
-      caloriesGained: this.$store.getters.getCaloriesGained,
-      graphCircleSegments: 628
-    };
+    return {};
   },
-  computed: {
-    caloriePercentComplete() {
-      return parseInt(
-        (parseInt(this.caloriesGained) / parseInt(this.calorieLimit)) * 100
-      );
-    },
-    caloriesRemaining() {
-      return parseInt(this.calorieLimit) - parseInt(this.caloriesGained);
-    },
-    graphCircleCompletion() {
-      return (
-        parseFloat(this.graphCircleSegments) -
-        parseFloat(this.graphCircleSegments) *
-          (parseFloat(this.caloriesGained) / parseFloat(this.calorieLimit))
-      );
-    }
-  }
+  computed: {}
 };
 </script>
 
@@ -72,20 +51,22 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.graph-text-info h2 {
+.graph-text-info p {
+  font-size: 3rem;
   line-height: 1;
   margin-bottom: 0.5rem;
 }
 
-.graph-text-info h2 span {
+.graph-text-info p span {
   font-size: 2rem;
 }
 
-.graph-text-info h5 {
+.graph-text-info p:last-child {
+  font-size: 2rem;
   margin-bottom: 0px;
 }
 
-.circle-graph circle {
+.circle-graph circle:last-child {
   transform-origin: 50% 50%;
   transform: rotate(-90deg);
 }
