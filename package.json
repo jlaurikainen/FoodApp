@@ -22,9 +22,11 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "dexie": "^2.0.4",
     "purecss": "^1.0.1",
     "vue": "^2.6.10",
-    "vue-router": "^3.0.3"
+    "vue-router": "^3.0.3",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@mdi/font": "^4.4.95",
