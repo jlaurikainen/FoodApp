@@ -1,7 +1,6 @@
 <template>
   <div class="row">
     <div class="column">
-      <h1 class="u-text-center">23.10.2019</h1>
       <div class="graph-container">
         <svg width="360" height="240" viewBox="0 0 360 240" class="u-full-width circle-graph">
           <circle cx="50%" cy="50%" r="100" fill="transparent" stroke-width="30" stroke="#ddf" />
@@ -13,28 +12,27 @@
             stroke-width="30"
             stroke="#334"
             stroke-dasharray="628"
-            stroke-dashoffset="234"
+            v-bind:style="{strokeDashoffset: graphCompletion}"
           />
         </svg>
         <div class="graph-text-info">
           <p>
-            69
+            {{ caloriePercent }}
             <span>%</span>
           </p>
-          <p>-123 kcal</p>
+          <p>{{ getTotalCalories }} kcal</p>
         </div>
       </div>
     </div>
     <div class="column">
       <table class="u-full-width">
         <tbody>
-          <tr>
-            <td>Aamiainen</td>
-            <td>123 kcal</td>
+          <tr v-if="meals.length == 0">
+            <td>Syö jotain</td>
           </tr>
-          <tr>
-            <td>Lounas</td>
-            <td>456 kcal</td>
+          <tr v-for="meal in meals" :key="meal.name">
+            <td>{{ meal.mealName }}</td>
+            <td>{{ meal.mealCalories }} kcal</td>
           </tr>
         </tbody>
       </table>
@@ -46,13 +44,35 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
+  mounted() {
+    this.computeGraphCompletion();
+  },
+  data() {
+    return {
+      graphCompletion: 628
+    };
+  },
   computed: {
     ...mapGetters([
-      "getCalorieLimit"
-    ])
+      "getCalorieLimit",
+      "getTotalCalories"
+    ]),
+    ...mapState({
+      meals: state => state.meals
+    }),
+    caloriePercent() {
+      return parseInt(this.getTotalCalories / this.getCalorieLimit * 100);
+    }
+  },
+  methods: {
+    computeGraphCompletion() {
+      setTimeout(() => {
+        this.graphCompletion = parseInt(628 - (this.caloriePercent / 100 * 628));
+      }, 10);
+    }
   }
 };
 </script>
@@ -88,6 +108,7 @@ export default {
 .circle-graph circle:last-child {
   transform-origin: 50% 50%;
   transform: rotate(-90deg);
+  transition: stroke-dashoffset 0.3s ease-in-out;
 }
 
 button {
@@ -103,5 +124,9 @@ button {
 
 td:last-child {
   text-align: right;
+}
+
+td:only-child {
+  text-align: left;
 }
 </style>

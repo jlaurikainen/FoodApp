@@ -5,16 +5,23 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userInfo: {}
+    userInfo: {},
+    meals: []
   },
   actions: {
     updateUser(state, user) {
       state.commit("setUserInfo", user);
+    },
+    updateMealList(state, mealInfo) {
+      state.commit("addMealToList", mealInfo);
     }
   },
   mutations: {
     setUserInfo(state, user) {
       state.userInfo = user;
+    },
+    addMealToList(state, mealInfo){
+      state.meals.push(mealInfo);
     }
   },
   getters: {
@@ -31,6 +38,15 @@ export default new Vuex.Store({
         - 5 * parseFloat(state.userInfo.age)
         - 161;
       }
+    },
+    getTotalCalories(state) {
+      let sum = 0;
+      if(state.meals.length > 0){
+        state.meals.forEach((meal) => {
+          sum += parseFloat(meal.mealCalories);
+        });
+      }
+      return sum;
     }
   }
 })
