@@ -3,16 +3,27 @@
     <div class="column">
       <div class="graph-container">
         <svg width="360" height="240" viewBox="0 0 360 240" class="u-full-width circle-graph">
-          <circle cx="50%" cy="50%" r="100" fill="transparent" stroke-width="30" stroke="#ddf" />
           <circle
             cx="50%"
             cy="50%"
-            r="100"
+            v-bind:style="{
+              r: circleRadius,
+              strokeWidth: strokeWidth,
+            }"
             fill="transparent"
-            stroke-width="30"
+            stroke="#ddf"
+          />
+          <circle
+            cx="50%"
+            cy="50%"
+            v-bind:style="{
+              r: circleRadius,
+              strokeWidth: strokeWidth,
+              strokeDasharray: strokeDashArray,
+              strokeDashoffset: strokeDashOffset
+            }"
+            fill="transparent"
             stroke="#334"
-            stroke-dasharray="628"
-            v-bind:style="{strokeDashoffset: graphCompletion}"
           />
         </svg>
         <div class="graph-text-info">
@@ -20,23 +31,21 @@
             {{ caloriePercent }}
             <span>%</span>
           </p>
-          <p>{{ getTotalCalories }} kcal</p>
+          <p>{{ getTotalCalories }}<br>
+          {{ getCalorieLimit }}</p>
         </div>
       </div>
     </div>
     <div class="column">
       <table class="u-full-width">
         <tbody>
-          <tr v-if="meals.length == 0">
-            <td>Syö jotain</td>
-          </tr>
           <tr v-for="meal in meals" :key="meal.name">
-            <td>{{ meal.mealName }}</td>
-            <td>{{ meal.mealCalories }} kcal</td>
+            <td>{{ meal.name }}</td>
+            <td>{{ meal.calories }} kcal</td>
           </tr>
         </tbody>
       </table>
-      <router-link to="/addmeal" tag="button" class="u-pull-right">
+      <router-link to="/addmeal" tag="button" class="u-pull-right button-primary">
         <i class="material-icons u-mr-1">add</i>Lisää ateria
       </router-link>
     </div>
@@ -52,7 +61,9 @@ export default {
   },
   data() {
     return {
-      graphCompletion: 628
+      circleRadius: 100,
+      strokeWidth: 30,
+      strokeDashOffset: 628
     };
   },
   computed: {
@@ -65,13 +76,16 @@ export default {
     }),
     caloriePercent() {
       return parseInt(this.getTotalCalories / this.getCalorieLimit * 100);
+    },
+    strokeDashArray() {
+      return parseInt(2 * this.circleRadius * Math.PI);
     }
   },
   methods: {
     computeGraphCompletion() {
       setTimeout(() => {
-        this.graphCompletion = parseInt(628 - (this.caloriePercent / 100 * 628));
-      }, 10);
+        this.strokeDashOffset = parseInt(this.strokeDashArray - (this.caloriePercent / 100 * this.strokeDashArray));
+      }, 100);
     }
   }
 };

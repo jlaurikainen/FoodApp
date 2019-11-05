@@ -12,35 +12,35 @@
       <div class="row">
         <div class="column">
           <label for="mealName">Aterian nimi</label>
-          <input type="text" name="mealName" class="u-full-width" v-model="addMealInfo.mealName" required>
+          <input type="text" name="mealName" class="u-full-width" v-model="mealInfo.mealName">
         </div>
       </div>
       <div class="row">
-        <div class="one-half column">
+        <div class="column">
           <label for="mealCalories">Kalorit</label>
-          <input type="number" name="mealCalories" v-model="addMealInfo.mealCalories" required>
+          <input type="number" name="mealCalories" class="u-full-width" v-model="mealInfo.mealCalories">
         </div>
-        <div class="one-half column">
+        <!--div class="one-half column">
           <label for="mealCarbs">Hiilihydraatit</label>
-          <input type="number" name="mealCarbs" v-model="addMealInfo.mealCarbs" required>
-        </div>
+          <input type="number" name="mealCarbs" v-model="mealInfo.mealCarbs">
+        </div-->
       </div>
-      <div class="row">
+      <!--div class="row">
         <div class="one-half column">
           <label for="mealProtein">Proteiinit</label>
-          <input type="number" name="mealProtein" v-model="addMealInfo.mealProtein" required>
+          <input type="number" name="mealProtein" v-model="mealInfo.mealProtein">
         </div>
         <div class="one-half column">
           <label for="mealFats">Rasvat</label>
-          <input type="number" name="mealFats" v-model="addMealInfo.mealFats" required>
+          <input type="number" name="mealFats" v-model="mealInfo.mealFats">
         </div>
-      </div>
+      </div-->
       <div class="row">
         <div class="column">
           <router-link to="/" tag="button" class="u-pull-left warning">
             <i class="material-icons u-mr-1">close</i>Peruuta
           </router-link>
-          <button type="submit" class="u-pull-right" @click.stop.prevent="submit()">
+          <button type="submit" class="u-pull-right button-primary" @click.stop.prevent="submit()">
             <i class="material-icons u-mr-1">add</i>Lisää
           </button>
         </div>
@@ -50,14 +50,14 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import Dexie from 'dexie';
 
 export default {
   components: {},
   data() {
     return {
       errors: [],
-      addMealInfo: {
+      mealInfo: {
         mealName: null,
         mealCalories: null,
         mealCarbs: null,
@@ -67,15 +67,26 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "updateMealList"
-    ]),
-    async submit() {
+    submit() {
       this.errors = [];
-      if(this.addMealInfo.mealName && this.addMealInfo.mealCalories)
+      let date = new Date(new Date().setHours(0,0,0,0));
+
+      if(this.mealInfo.mealName && this.mealInfo.mealCalories)
       {
-        await this.updateMealList(this.addMealInfo);
-        this.$router.push("/");
+        const mealdb = new Dexie("mealdb");
+        
+        mealdb.version(1).stores({
+          mealsByDate: "++id, date"
+        });
+
+        mealdb.mealsByDate.add({
+          date: date,
+          name: this.mealInfo.mealName,
+          calories: this.mealInfo.mealCalories
+        });
+
+        this.$store.dispatch("updateMealList");
+        this.$router.push("/").catch((err) => {});
       }
       else {
         this.errors.push("Lisää vähintään aterian nimi ja kalorit.");

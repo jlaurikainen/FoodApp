@@ -7,44 +7,11 @@
 </template>
 
 <script>
-import Dexie from 'dexie';
-
 export default {
   name: "App",
-  data() {
-    return {
-      db: null
-    }
-  },
-  async mounted() {
-    this.db = new Dexie('userdb');
-      
-    this.db.version(1).stores({
-      user: "++id"
-    });
-  
-    this.db.user.get(1, (user) => {
-      if(user == null) {
-        this.db.user.add({
-          age: 34,
-          height: 187,
-          weight: 90,
-          sex: "male"
-        }).then(() => {
-          console.log("default user added");
-        }).catch((e) => {
-          console.log("error adding default user" + e);
-        });
-      }
-    });
-
-    let userInfo;
-
-    await this.db.user.get(1, function(user) {
-      userInfo = user;
-    });
-
-    await this.$store.dispatch("updateUser", userInfo);
+  mounted() {
+    this.$store.dispatch("checkUser", { router: this.$router });
+    this.$store.dispatch("updateMealList", { router: this.$router });
   }
 };
 </script>
