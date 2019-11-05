@@ -10,8 +10,20 @@
 export default {
   name: "App",
   mounted() {
+    document.addEventListener("backbutton", this.backButtonNavigation, false);
     this.$store.dispatch("checkUser", { router: this.$router });
     this.$store.dispatch("updateMealList", { router: this.$router });
+  },
+  methods: {
+    backButtonNavigation(e) {
+      e.preventDefault();
+      if(this.$router.currentRoute.fullPath != "/"){
+        this.$router.push("/").catch((err) => {});
+      }
+      else{
+        navigator.app.exitApp();
+      }
+    }
   }
 };
 </script>
