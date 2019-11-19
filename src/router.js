@@ -3,6 +3,8 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import AddMeal from "./views/AddMeal.vue";
 import UserInfo from "./views/UserInfo.vue";
+import DailyCalories from "./views/DailyCalories";
+import MonthlyCalories from "./views/MonthlyCalories";
 
 Vue.use(Router);
 
@@ -12,8 +14,19 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: "",
+          name: "daily",
+          component: DailyCalories
+        },
+        {
+          path: "monthly",
+          name: "monthly",
+          component: MonthlyCalories
+        }
+      ]
     },
     {
       path: "/addmeal",

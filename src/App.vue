@@ -3,11 +3,17 @@
     <transition name="fade">
       <router-view />
     </transition>
+    <NavigationComponent />
   </div>
 </template>
 
 <script>
+import NavigationComponent from "./components/NavigationComponent";
+
 export default {
+  components: {
+    NavigationComponent
+  },
   name: "App",
   mounted() {
     document.addEventListener("backbutton", this.backButtonNavigation, false);

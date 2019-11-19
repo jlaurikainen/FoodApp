@@ -28,5 +28,7 @@
 
 /* Custom modules */
 @import "modules/helpers";
+@import "~@fullcalendar/core/main.css";
+@import "~@fullcalendar/daygrid/main.css";
 
 /* sass .\src\assets\scss\skeleton.scss .\src\assets\style.css --style compressed */
