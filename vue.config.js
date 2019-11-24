@@ -1,6 +1,6 @@
 module.exports = {
-  publicPath: '',
+  publicPath: "",
   pluginOptions: {
-    cordovaPath: 'src-cordova'
+    cordovaPath: "src-cordova"
   }
-}
+};

@@ -1,39 +1,51 @@
 <template>
   <div class="row">
     <div class="graph-container">
-        <svg width="360" height="240" viewBox="0 0 360 240" class="u-full-width circle-graph">
-          <circle
-            cx="50%"
-            cy="50%"
-            v-bind:style="{
-              r: circleRadius,
-              strokeWidth: strokeWidth,
-            }"
-            fill="transparent"
-            stroke="#ddf"
-          />
-          <circle
-            cx="50%"
-            cy="50%"
-            v-bind:style="{
-              r: circleRadius,
-              strokeWidth: strokeWidth,
-              strokeDasharray: strokeDashArray,
-              strokeDashoffset: strokeDashOffset
-            }"
-            fill="transparent"
-            stroke="#334"
-          />
-        </svg>
-        <div class="graph-text-info">
-          <p>
-            {{ caloriePercent }}
-            <span>%</span>
-          </p>
-          <p>{{ getTotalCalories }}<br>
-          {{ getCalorieLimit }}</p>
-        </div>
-      </div>
+      <svg
+        width="360"
+        height="240"
+        viewBox="0 0 360 240"
+        class="u-full-width circle-graph"
+      >
+        <circle
+          cx="50%"
+          cy="50%"
+          :style="{
+            r: circleRadius,
+            strokeWidth: strokeWidth
+          }"
+          fill="transparent"
+          stroke="#ddf"
+        />
+        <circle
+          cx="50%"
+          cy="50%"
+          :style="{
+            r: circleRadius,
+            strokeWidth: strokeWidth,
+            strokeDasharray: strokeDashArray,
+            strokeDashoffset: strokeDashOffset
+          }"
+          fill="transparent"
+          stroke="#334"
+        />
+        <text
+          x="50%"
+          y="45%"
+          font-size="3.5rem"
+          dominant-baseline="middle"
+          text-anchor="middle"
+        >
+          {{ caloriePercent }}%
+          <tspan x="50%" y="57.5%" font-size="0.6em">
+            {{ getTotalCalories }}
+          </tspan>
+          <tspan x="50%" y="65%" font-size="0.6em">
+            {{ getCalorieLimit }}
+          </tspan>
+        </text>
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -52,15 +64,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "getCalorieLimit",
-      "getTotalCalories"
-    ]),
+    ...mapGetters(["getCalorieLimit", "getTotalCalories"]),
     ...mapState({
       meals: state => state.meals
     }),
     caloriePercent() {
-      return parseInt(this.getTotalCalories / this.getCalorieLimit * 100);
+      return parseInt((this.getTotalCalories / this.getCalorieLimit) * 100);
     },
     strokeDashArray() {
       return parseInt(2 * this.circleRadius * Math.PI);
@@ -69,39 +78,19 @@ export default {
   methods: {
     computeGraphCompletion() {
       setTimeout(() => {
-        this.strokeDashOffset = parseInt(this.strokeDashArray - (this.caloriePercent / 100 * this.strokeDashArray));
+        this.strokeDashOffset = parseInt(
+          this.strokeDashArray -
+            (this.caloriePercent / 100) * this.strokeDashArray
+        );
       }, 100);
     }
   }
-}
+};
 </script>
 
 <style scoped>
 .graph-container {
   position: relative;
-}
-
-.graph-text-info {
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.graph-text-info p {
-  font-size: 3rem;
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-.graph-text-info p span {
-  font-size: 2rem;
-}
-
-.graph-text-info p:last-child {
-  font-size: 2rem;
-  margin-bottom: 0px;
 }
 
 .circle-graph circle:last-child {

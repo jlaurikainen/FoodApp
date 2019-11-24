@@ -12,13 +12,23 @@
       <div class="row">
         <div class="column">
           <label for="mealName">Aterian nimi</label>
-          <input type="text" name="mealName" class="u-full-width" v-model="mealInfo.mealName">
+          <input
+            type="text"
+            name="mealName"
+            class="u-full-width"
+            v-model="mealInfo.mealName"
+          />
         </div>
       </div>
       <div class="row">
         <div class="column">
           <label for="mealCalories">Kalorit</label>
-          <input type="number" name="mealCalories" class="u-full-width" v-model="mealInfo.mealCalories">
+          <input
+            type="number"
+            name="mealCalories"
+            class="u-full-width"
+            v-model="mealInfo.mealCalories"
+          />
         </div>
         <!--div class="one-half column">
           <label for="mealCarbs">Hiilihydraatit</label>
@@ -40,7 +50,11 @@
           <router-link to="/" tag="button" class="u-pull-left warning">
             <i class="material-icons u-mr-1">close</i>Peruuta
           </router-link>
-          <button type="submit" class="u-pull-right button-primary" @click.stop.prevent="submit()">
+          <button
+            type="submit"
+            class="u-pull-right button-primary"
+            @click.stop.prevent="submit()"
+          >
             <i class="material-icons u-mr-1">add</i>Lisää
           </button>
         </div>
@@ -50,7 +64,7 @@
 </template>
 
 <script>
-import Dexie from 'dexie';
+import Dexie from "dexie";
 
 export default {
   components: {},
@@ -69,12 +83,11 @@ export default {
   methods: {
     submit() {
       this.errors = [];
-      let date = new Date(new Date().setHours(0,0,0,0));
+      let date = new Date(new Date().setHours(0, 0, 0, 0));
 
-      if(this.mealInfo.mealName && this.mealInfo.mealCalories)
-      {
+      if (this.mealInfo.mealName && this.mealInfo.mealCalories) {
         const mealdb = new Dexie("mealdb");
-        
+
         mealdb.version(1).stores({
           mealsByDate: "++id, date"
         });
@@ -86,9 +99,8 @@ export default {
         });
 
         this.$store.dispatch("updateMealList");
-        this.$router.push("/").catch((err) => {});
-      }
-      else {
+        this.$router.push("/").catch(err => {});
+      } else {
         this.errors.push("Lisää vähintään aterian nimi ja kalorit.");
       }
     }
@@ -108,29 +120,29 @@ button {
   align-self: center;
 }
 
-form .row{
+form .row {
   padding: 0px;
 }
 
-form .row:last-child{
+form .row:last-child {
   padding-top: 20px;
 }
 
-.one-half input{
+.one-half input {
   width: 100%;
 }
 
 @media all and (max-width: 549px) {
-  .one-half{
+  .one-half {
     width: 48%;
   }
 
-  .one-half input{
+  .one-half input {
     width: 100%;
   }
 
-  .one-half:nth-child(even){
+  .one-half:nth-child(even) {
     margin-left: 4%;
-  } 
+  }
 }
 </style>

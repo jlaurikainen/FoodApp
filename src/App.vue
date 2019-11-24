@@ -23,10 +23,9 @@ export default {
   methods: {
     backButtonNavigation(e) {
       e.preventDefault();
-      if(this.$router.currentRoute.fullPath != "/"){
-        this.$router.push("/").catch((err) => {});
-      }
-      else{
+      if (this.$router.currentRoute.fullPath != "/") {
+        this.$router.push("/").catch(err => {});
+      } else {
         navigator.app.exitApp();
       }
     }

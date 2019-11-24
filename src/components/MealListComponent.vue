@@ -9,7 +9,11 @@
           </tr>
         </tbody>
       </table>
-      <router-link to="/addmeal" tag="button" class="u-pull-right button-primary">
+      <router-link
+        to="/addmeal"
+        tag="button"
+        class="u-pull-right button-primary"
+      >
         <i class="material-icons u-mr-1">add</i>Lisää ateria
       </router-link>
     </div>
@@ -19,7 +23,7 @@
 <script>
 export default {
   props: ["meals"]
-}
+};
 </script>
 
 <style scoped>
