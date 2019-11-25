@@ -1,29 +1,18 @@
-# foodapp
+# FoodApp
 
-## Project setup
-```
-npm install
-```
+App for keeping track of daily nutrition information.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Current features
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- Save user info to IndexedDB using Dexie.js
+  - Allow updating
+- Keep count of current daily calories and measures it against BRM
+- Adding meals
+  - Manual adding, requires name and calories
 
-### Run your tests
-```
-npm run test
-```
+## Planned features
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Create premade meals using Fineli open data for calorie and nutrition calculations
+  - Create Firestore database for the data and allow user to save data locally
+- Track calories per last 7 days and 30 days
+- ...
