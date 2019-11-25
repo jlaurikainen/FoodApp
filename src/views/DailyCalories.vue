@@ -24,7 +24,9 @@
             r: circleRadius,
             strokeWidth: strokeWidth,
             strokeDasharray: strokeDashArray,
-            strokeDashoffset: strokeDashOffset
+            strokeDashoffset: strokeDashOffset,
+            transformOrigin: '50% 50%',
+            transform: 'rotate(-90deg)'
           }"
           fill="transparent"
           stroke="#334"
@@ -94,8 +96,6 @@ export default {
 }
 
 .circle-graph circle:last-child {
-  transform-origin: 50% 50%;
-  transform: rotate(-90deg);
   transition: stroke-dashoffset 0.3s ease-in-out;
 }
 </style>

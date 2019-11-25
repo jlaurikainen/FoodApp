@@ -1,24 +1,27 @@
 <template>
   <div class="row">
     <div class="column">
-      <ul>
+      <!--ul>
         <li><router-link to="/">Daily</router-link></li>
         <li><router-link to="/monthly">Monthly</router-link></li>
-      </ul>
+      </ul-->
       <router-view />
     </div>
     <MealListComponent :meals="meals" />
+    <NavigationComponent />
   </div>
 </template>
 
 <script>
 import MealListComponent from "../components/MealListComponent";
+import NavigationComponent from "../components/NavigationComponent";
 
 import { mapState } from "vuex";
 
 export default {
   components: {
-    MealListComponent
+    MealListComponent,
+    NavigationComponent
   },
   computed: {
     ...mapState({
@@ -28,4 +31,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  body{
+    padding-bottom: 3rem;
+  }
+</style>

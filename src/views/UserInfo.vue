@@ -19,6 +19,8 @@
               v-model="userInfo.height"
             />
           </div>
+        </div>
+        <div class="row">
           <div class="column">
             <label for="mealCarbs">Paino</label>
             <input
@@ -46,9 +48,9 @@
               <input
                 type="radio"
                 name="sex"
-                value="female"
+                value="male"
                 v-model="userInfo.sex"
-              /><span class="label-body">Nainen</span>
+              /><span class="label-body">Mies</span>
             </label>
           </div>
           <div class="column one-half">
@@ -56,9 +58,9 @@
               <input
                 type="radio"
                 name="sex"
-                value="male"
+                value="female"
                 v-model="userInfo.sex"
-              /><span class="label-body">Mies</span>
+              /><span class="label-body">Nainen</span>
             </label>
           </div>
         </div>
@@ -69,7 +71,8 @@
               class="u-pull-right button-primary"
               @click.stop.prevent="submit()"
             >
-              <i class="material-icons u-mr-1">add</i>Tallenna
+              <i class="material-icons u-mr-1">add</i>
+                {{userExists ? 'Päivitä' : 'Tallenna'}}
             </button>
           </div>
         </div>
@@ -82,6 +85,24 @@
 import Dexie from "dexie";
 
 export default {
+  async mounted() {
+    const userdb = new Dexie("userdb");
+
+    userdb.version(1).stores({
+      user: "++id"
+    });
+
+    await userdb.user.get(1, user => {
+      if (user == null) {
+        return;
+      } else {
+        this.userExists = true;
+        this.userInfo = user;
+      }
+    });
+
+    userdb.close();
+  },
   data() {
     return {
       errors: [],
@@ -90,7 +111,8 @@ export default {
         height: null,
         weight: null,
         sex: null
-      }
+      },
+      userExists: false
     };
   },
   methods: {
@@ -104,15 +126,31 @@ export default {
           user: "++id"
         });
 
-        userdb.user.add({
-          age: this.userInfo.age,
-          height: this.userInfo.height,
-          weight: this.userInfo.weight,
-          sex: this.userInfo.sex
-        });
+        if(!this.userExists){
+          this.newUser(userdb);
+        }
+        else {
+          this.updateUser(userdb);
+        }
 
         this.$store.dispatch("checkUser", { router: this.$router });
       }
+    },
+    newUser(db) {
+      db.user.add({
+        age: this.userInfo.age,
+        height: this.userInfo.height,
+        weight: this.userInfo.weight,
+        sex: this.userInfo.sex
+      });
+    },
+    updateUser(db) {
+      db.user.update(1, {
+        age: this.userInfo.age,
+        height: this.userInfo.height,
+        weight: this.userInfo.weight,
+        sex: this.userInfo.sex
+      })
     },
     hasNull(t) {
       for (let m in t) {

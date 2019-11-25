@@ -99,7 +99,9 @@ export default {
         });
 
         this.$store.dispatch("updateMealList");
-        this.$router.push("/").catch(err => {});
+        this.$router.push("/").catch(err => {
+          console.log(err);
+        });
       } else {
         this.errors.push("Lisää vähintään aterian nimi ja kalorit.");
       }

@@ -1,24 +1,94 @@
 <template>
-  <div class="navigation-wrapper">
+  <div class="navigation-wrapper" :class="[!menuOpen ? '' : openClass]">
+    <div class="button-wrapper" @click="toggleMenu">
+      <i class="material-icons">menu</i>
+    </div>
     <ul class="nav-list">
-      <li class="nav-list-item"></li>
+      <router-link
+        to="/userinfo"
+        tag="li"
+        class="nav-list-item"
+      >
+        <i class="material-icons u-mr-1">person</i>Tietosi
+      </router-link>
     </ul>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      menuOpen: false,
+      openClass: "menu-open"
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    }
+  }, 
+  watch: {
+    '$route' () {
+      this.menuOpen = false;
+    }
+  }
+};
 </script>
 
 <style scoped>
 .navigation-wrapper {
   position: fixed;
-  top: 0px;
+  bottom: 0px;
   left: 0px;
-  height: 100vh;
+  height: 50vh;
   width: 100vw;
-  background: rgb(35, 0, 44);
+  background: #334;
   z-index: 999;
-  transform: translateX(-100%);
+  transform: translateY(100%);
+  transition: transform 225ms ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-list{
+  margin-bottom: 0px;
+}
+
+.nav-list-item {
+  font-size: 2rem;
+  color: #fff;
+  list-style: none;
+  display: flex;
+}
+
+.nav-list-item:last-child {
+  margin-bottom: 0px;
+}
+
+.nav-list-item .material-icons {
+  font-size: 2rem;
+  align-self: center;
+}
+
+.button-wrapper {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 4rem;
+  width: 4rem;
+  background: #334;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.navigation-wrapper.menu-open {
+  transform: translateY(0%);
 }
 </style>
