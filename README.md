@@ -2,6 +2,15 @@
 
 App for keeping track of daily nutrition information.
 
+## Technologies used
+
+- Skeleton Grid
+- Vue.js
+  - Vuex
+- Dexie.js
+  - IndexedDB handling
+- Cordova for Android builds
+
 ## Current features
 
 - Save user info to IndexedDB using Dexie.js
@@ -13,6 +22,5 @@ App for keeping track of daily nutrition information.
 ## Planned features
 
 - Create premade meals using Fineli open data for calorie and nutrition calculations
-  - Create Firestore database for the data and allow user to save data locally
-- Track calories per last 7 days and 30 days
+- Track calories per last 7 or 30 entries
 - ...
