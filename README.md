@@ -2,6 +2,8 @@
 
 App for keeping track of daily nutrition information.
 
+Live demo: https://jlfoodapp.firebaseapp.com/
+
 ## Technologies used
 
 - Skeleton Grid
