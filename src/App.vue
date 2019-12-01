@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <transition name="fade">
+    <transition name="fade" mode="out-in">
       <router-view />
     </transition>
   </div>
@@ -18,7 +18,9 @@ export default {
     backButtonNavigation(e) {
       e.preventDefault();
       if (this.$router.currentRoute.fullPath != "/") {
-        this.$router.push("/").catch(err => {});
+        this.$router.push("/").catch(err => {
+          console.log(err);
+        });
       } else {
         navigator.app.exitApp();
       }
@@ -35,7 +37,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.25s;
 }
 
 .fade-enter,

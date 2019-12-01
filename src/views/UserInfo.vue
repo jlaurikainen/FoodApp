@@ -11,7 +11,7 @@
         </div>
         <div class="row">
           <div class="column">
-            <label for="mealCalories">Pituus</label>
+            <label for="height">Pituus</label>
             <input
               type="number"
               name="height"
@@ -22,7 +22,7 @@
         </div>
         <div class="row">
           <div class="column">
-            <label for="mealCarbs">Paino</label>
+            <label for="weight">Paino</label>
             <input
               type="number"
               name="weight"
@@ -33,13 +33,28 @@
         </div>
         <div class="row">
           <div class="column">
-            <label for="mealProtein">Ikä</label>
+            <label for="age">Ikä</label>
             <input
               type="number"
               name="age"
               class="u-full-width"
               v-model="userInfo.age"
             />
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <label for="activity">Aktiivisuustaso</label>
+            <select class="u-full-width" id="activity" v-model="userInfo.activity">
+              <option value="1">BMR</option>
+              <option value="1.2">Vähäinen</option>
+              <option value="1.35">Kevyt</option>
+              <option value="1.5">Kohtalainen</option>
+              <option value="1.65">Aktiivinen</option>
+              <option value="1.8">Erittäin aktiivinen</option>
+              <option value="1.95">Extra-aktiivinen</option>
+            </select>
+            <p>{{ activityText }}</p>
           </div>
         </div>
         <div class="row">
@@ -66,6 +81,15 @@
         </div>
         <div class="row">
           <div class="column">
+            <h4 class="u-text-center">Kalorikulutusarvio</h4>
+            <h2 class="u-text-center">{{ calories }}</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <router-link v-if="userExists" to="/" tag="button" class="u-pull-left warning">
+              <i class="material-icons u-mr-1">close</i>Peruuta
+            </router-link>
             <button
               type="submit"
               class="u-pull-right button-primary"
@@ -110,8 +134,10 @@ export default {
         age: null,
         height: null,
         weight: null,
-        sex: null
+        sex: null,
+        activity: 1
       },
+      activityText: "Valitse aktiivisuustasosi",
       userExists: false
     };
   },
@@ -141,7 +167,8 @@ export default {
         age: this.userInfo.age,
         height: this.userInfo.height,
         weight: this.userInfo.weight,
-        sex: this.userInfo.sex
+        sex: this.userInfo.sex,
+        activity: this.userInfo.activity
       });
     },
     updateUser(db) {
@@ -149,7 +176,8 @@ export default {
         age: this.userInfo.age,
         height: this.userInfo.height,
         weight: this.userInfo.weight,
-        sex: this.userInfo.sex
+        sex: this.userInfo.sex,
+        activity: this.userInfo.activity
       })
     },
     hasNull(t) {
@@ -159,6 +187,25 @@ export default {
         }
       }
       return false;
+    }
+  },
+  computed: {
+    calories() {
+      if (this.userInfo.sex == "male") {
+        return parseInt(
+          (10 * parseFloat(this.userInfo.weight) +
+          6.25 * parseFloat(this.userInfo.height) -
+          5 * parseFloat(this.userInfo.age) +
+          5) * parseFloat(this.userInfo.activity)
+        );
+      } else {
+        return parseInt(
+          (10 * parseFloat(this.userInfo.weight) +
+          6.25 * parseFloat(this.userInfo.height) -
+          5 * parseFloat(this.userInfo.age) -
+          161) * parseFloat(this.userInfo.activity)
+        );
+      }
     }
   }
 };
@@ -176,6 +223,10 @@ button {
   align-self: center;
 }
 
+form {
+  margin-bottom: 0px;
+}
+
 form .row {
   padding: 0px;
 }
@@ -186,6 +237,11 @@ form .row:last-child {
 
 .one-half {
   width: 100%;
+}
+
+h4 {
+  margin-top: 2rem;
+  margin-bottom: 0px;
 }
 
 @media all and (max-width: 549px) {

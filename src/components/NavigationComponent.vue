@@ -1,7 +1,7 @@
 <template>
   <div class="navigation-wrapper" :class="[!menuOpen ? '' : openClass]">
     <div class="button-wrapper" @click="toggleMenu">
-      <i class="material-icons">menu</i>
+      <i class="material-icons">{{ !menuOpen ? "menu" : "close" }}</i>
     </div>
     <ul class="nav-list">
       <router-link
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       menuOpen: false,
-      openClass: "menu-open"
+      openClass: "menu-open",
     };
   },
   methods: {
@@ -39,17 +39,16 @@ export default {
 <style scoped>
 .navigation-wrapper {
   position: fixed;
-  bottom: 0px;
+  bottom: -100%;
   left: 0px;
   height: 50vh;
   width: 100vw;
   background: #334;
   z-index: 999;
-  transform: translateY(100%);
-  transition: transform 225ms ease-out;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: bottom 0.35s ease-in-out;
 }
 
 .nav-list{
@@ -73,8 +72,8 @@ export default {
 }
 
 .button-wrapper {
-  position: absolute;
-  bottom: 100%;
+  position: fixed;
+  bottom: 0%;
   left: 50%;
   transform: translateX(-50%);
   height: 4rem;
@@ -86,9 +85,11 @@ export default {
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
+  cursor: pointer;
+  z-index: 1000;
 }
 
 .navigation-wrapper.menu-open {
-  transform: translateY(0%);
+  bottom: 0%;
 }
 </style>

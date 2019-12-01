@@ -67,17 +67,17 @@ export default new Vuex.Store({
     getCalorieLimit(state) {
       if (state.userInfo.sex == "male") {
         return parseInt(
-          10 * parseFloat(state.userInfo.weight) +
-            6.25 * parseFloat(state.userInfo.height) -
-            5 * parseFloat(state.userInfo.age) +
-            5
+          (10 * parseFloat(state.userInfo.weight) +
+          6.25 * parseFloat(state.userInfo.height) -
+          5 * parseFloat(state.userInfo.age) +
+          5) * parseFloat(state.userInfo.activity)
         );
       } else {
         return parseInt(
-          10 * parseFloat(state.userInfo.weight) +
-            6.25 * parseFloat(state.userInfo.height) -
-            5 * parseFloat(state.userInfo.age) -
-            161
+          (10 * parseFloat(state.userInfo.weight) +
+          6.25 * parseFloat(state.userInfo.height) -
+          5 * parseFloat(state.userInfo.age) -
+          161) * parseFloat(state.userInfo.activity)
         );
       }
     },
