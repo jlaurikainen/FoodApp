@@ -131,10 +131,10 @@ export default {
     return {
       errors: [],
       userInfo: {
-        age: null,
-        height: null,
-        weight: null,
-        sex: null,
+        age: 0,
+        height: 0,
+        weight: 0,
+        sex: "male",
         activity: 1
       },
       activityText: "Valitse aktiivisuustasosi",

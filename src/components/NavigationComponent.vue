@@ -60,6 +60,7 @@ export default {
   color: #fff;
   list-style: none;
   display: flex;
+  cursor: pointer;
 }
 
 .nav-list-item:last-child {
