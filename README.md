@@ -2,7 +2,7 @@
 
 App for keeping track of daily nutrition information.
 
-*Link here for live version*
+Live demo: https://jlaurikainen.github.io/FoodApp/
 
 ## Technologies used
 
@@ -23,6 +23,7 @@ App for keeping track of daily nutrition information.
 
 ## Planned features
 
+- Keep track of macronutrients
 - Create premade meals using Fineli open data for calorie and nutrition calculations
 - Track calories per last 7 or 30 entries
 - ...
