@@ -2,8 +2,6 @@
 
 App for keeping track of daily nutrition information.
 
-Live demo: https://jlaurikainen.github.io/FoodApp/
-
 ## Technologies used
 
 - Skeleton Grid
